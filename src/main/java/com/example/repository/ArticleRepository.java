@@ -6,7 +6,9 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.ResultSetExtractor;
 import org.springframework.jdbc.core.RowMapper;
+import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
+import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 import org.springframework.stereotype.Repository;
 
 import com.example.domain.Article;
@@ -72,5 +74,16 @@ public class ArticleRepository {
 					 + "FROM articles art LEFT OUTER JOIN comments com ON art.id = com.article_id ORDER BY art.id DESC, com.id DESC";
 		List<Article> articleList = template.query(sql, Article_RESULT_SET_EXTRACTOR);
 		return articleList;
+	}
+	
+	/**
+	 * 記事を1件削除する.
+	 * 
+	 * @param id ID
+	 */
+	public void deletedById(int id) {
+		String sql = "DELETE FROM " + TABLE_NAME + " WHERE id = :id";
+		SqlParameterSource param = new MapSqlParameterSource().addValue("id", id);
+		template.update(sql, param);
 	}
 }
