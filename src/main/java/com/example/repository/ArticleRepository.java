@@ -5,13 +5,13 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.ResultSetExtractor;
-import org.springframework.jdbc.core.RowMapper;
+import org.springframework.jdbc.core.namedparam.BeanPropertySqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
+import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 import org.springframework.stereotype.Repository;
 
 import com.example.domain.Article;
 import com.example.domain.Comment;
-
 /**
  * 記事を操作するレポジトリ.
  * 
@@ -72,5 +72,19 @@ public class ArticleRepository {
 					 + "FROM articles art LEFT OUTER JOIN comments com ON art.id = com.article_id ORDER BY art.id DESC, com.id DESC";
 		List<Article> articleList = template.query(sql, Article_RESULT_SET_EXTRACTOR);
 		return articleList;
+	}
+	
+	/**
+	 * 記事をインサートします.
+	 * 
+	 * @param article
+	 *            記事
+	 * @return 記事
+	 */
+	public Article insert(Article article) {
+		SqlParameterSource param = new BeanPropertySqlParameterSource(article);
+		String sql = "INSERT INTO articles(name, content) VALUES(:name, :content)";
+		template.update(sql, param);
+		return article;
 	}
 }
