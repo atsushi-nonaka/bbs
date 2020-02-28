@@ -5,15 +5,13 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.ResultSetExtractor;
-import org.springframework.jdbc.core.RowMapper;
-import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
+import org.springframework.jdbc.core.namedparam.BeanPropertySqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 import org.springframework.stereotype.Repository;
 
 import com.example.domain.Article;
 import com.example.domain.Comment;
-
 /**
  * 記事を操作するレポジトリ.
  * 
@@ -77,13 +75,16 @@ public class ArticleRepository {
 	}
 	
 	/**
-	 * 記事を1件削除する.
+	 * 記事をインサートします.
 	 * 
-	 * @param id ID
+	 * @param article
+	 *            記事
+	 * @return 記事
 	 */
-	public void deletedById(int id) {
-		String sql = "DELETE FROM " + TABLE_NAME + " WHERE id = :id";
-		SqlParameterSource param = new MapSqlParameterSource().addValue("id", id);
+	public Article insert(Article article) {
+		SqlParameterSource param = new BeanPropertySqlParameterSource(article);
+		String sql = "INSERT INTO articles(name, content) VALUES(:name, :content)";
 		template.update(sql, param);
+		return article;
 	}
 }
