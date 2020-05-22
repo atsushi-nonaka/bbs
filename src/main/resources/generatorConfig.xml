@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!-- https://cloudear.jp/blog/?p=708 -->
+<!-- https://cloudear.jp/blog/?p=712 -->
+
+<!DOCTYPE generatorConfiguration
+  PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+  "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+
+<generatorConfiguration>
+
+	<classPathEntry location="C:\Users\nonaa\.m2\repository\org\postgresql\postgresql\42.2.5\postgresql-42.2.5.jar"/>
+
+
+ 	<context id="PostgreSQL" targetRuntime="MyBatis3">
+    <jdbcConnection driverClass="org.postgresql.Driver"
+        connectionURL="jdbc:postgresql://localhost:5432/student"
+        userId="postgres"
+        password="postgres">
+    </jdbcConnection>
+
+    <javaModelGenerator targetPackage="com.example.domain" targetProject="src/main/java/">
+      <property name="enableSubPackages" value="true" />
+      <property name="trimStrings" value="true" />
+    </javaModelGenerator>
+
+    <sqlMapGenerator targetPackage="com.example.mapper"  targetProject="src/main/resources">
+      <property name="enableSubPackages" value="true" />
+    </sqlMapGenerator>
+
+    <javaClientGenerator type="XMLMAPPER" targetPackage="com.example.mapper"  targetProject="src/main/java">
+      <property name="enableSubPackages" value="true" />
+    </javaClientGenerator>
+
+    <table tableName="articles" />
+    <table tableName="comments" />
+	
+  </context>
+</generatorConfiguration>
