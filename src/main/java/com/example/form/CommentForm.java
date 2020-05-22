@@ -1,38 +1,22 @@
 package com.example.form;
 
-public class CommentForm {
+import lombok.Data;
 
-	private String article;
+@Data
+public class CommentForm {
+	/** 記事ID */
+	private String articleId;
+	/** コメント投稿者名 */
 	private String name;
+	/** コメント内容 */
 	private String content;
 
-	@Override
-	public String toString() {
-		return "CommentForm [article=" + article + ", name=" + name + ", content=" + content + "]";
+	/**
+	 * 記事IDをString→Integer
+	 * 
+	 * @return
+	 */
+	public Integer getIntArticleId() {
+		return Integer.parseInt(articleId);
 	}
-
-	public String getArticle() {
-		return article;
-	}
-
-	public void setArticle(String article) {
-		this.article = article;
-	}
-
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
-
-	public String getContent() {
-		return content;
-	}
-
-	public void setContent(String content) {
-		this.content = content;
-	}
-
 }

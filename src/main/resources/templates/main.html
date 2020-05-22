@@ -5,6 +5,38 @@
 <title>Insert title here</title>
 </head>
 <body>
-
+	<h1>掲示板アプリケーション</h1>
+	
+	<form th:action="@{/insert}" method="post">
+		投稿者名：<input type="text" name="name"><br>
+		投稿内容：
+		<textarea name="content"></textarea><br>
+		<button>記事投稿</button>
+	</form>
+	
+	<div th:each="article : ${articleList}" >
+		<hr>
+		<form th:action="@{'/delete?id=' + ${article.id}}" method="post">
+			<div th:text="投稿ID： + ${article.id}"></div>
+			<div th:text="投稿者名： +  ${article.name}"></div>
+			<div th:text="投稿内容： +  ${article.content}"></div>
+			<button>記事削除</button>
+		</form>
+		<input type="hidden" th:value="${article.id}">
+		
+		<div th:each="comment : ${article.commentList}">
+			<div th:text="コメントID： + ${comment.id}"></div>
+			<div th:text="コメント名： + ${comment.name}"></div>
+			<div th:text="コメント内容： + ${comment.content}"></div>
+		</div>
+		
+		<form method="post" th:action="@{/comment/insert}">
+			名前：<input type="text" name="name"><br>
+			コメント：
+			<textarea name="content"></textarea><br>
+			<input type="hidden" name="articleId" th:value="${article.id}">
+			<button>コメント投稿</button>
+		</form>
+	</div>
 </body>
 </html>
