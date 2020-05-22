@@ -10,19 +10,16 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.example.domain.Article;
 import com.example.form.ArticleForm;
+import com.example.mapper.ArticleMapper;
 import com.example.repository.ArticleRepository;
 
 @Controller
 @RequestMapping("")
 public class ShowBbsController {
 	
-	@Autowired
-	private ArticleRepository articleRepository;
 	
-	@ModelAttribute
-	public ArticleForm setUpArticleForm() {
-		return new ArticleForm();
-	}
+	@Autowired
+	private ArticleMapper mapper;
 	
 	/**
 	 * 記事,コメントを表示する.
@@ -32,7 +29,8 @@ public class ShowBbsController {
 	@RequestMapping("")
 	public String index(Model model) {
 		//ここから中級課題
-		List<Article> articleList = articleRepository.findAll();
+		//List<Article> articleList = articleRepository.findAll();
+		List<Article> articleList = mapper.selectArticle();
 		model.addAttribute("articleList", articleList);
 		return "main";
 	}

@@ -4,9 +4,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.example.form.CommentForm;
-import com.example.repository.ArticleRepository;
-import com.example.repository.CommentRepository;
+import com.example.mapper.ArticleMapper;
+import com.example.mapper.CommentMapper;
 
 /**
  * 記事を表示するクラス
@@ -19,10 +18,10 @@ import com.example.repository.CommentRepository;
 public class DeleteArticleController {
 	
 	@Autowired
-	private ArticleRepository articleRepository;
+	private ArticleMapper articleMapper;
 	
 	@Autowired
-	private CommentRepository commentRepository;
+	private CommentMapper commentMapper;
 	
 	/**
 	 * 記事削除を行う.
@@ -32,8 +31,8 @@ public class DeleteArticleController {
 	 */
 	@RequestMapping("/delete")
 	public String deleteArticle(Integer id) {
-		commentRepository.deleteByArticleId(id);
-	    articleRepository.deletedById(id);
+		commentMapper.deleteByArticleId(id);
+	    articleMapper.deleteByPrimaryKey(id);
 	    return "redirect:/";
 	}
 }

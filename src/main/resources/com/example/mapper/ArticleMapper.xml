@@ -10,6 +10,12 @@
     <id column="id" property="id" jdbcType="INTEGER" />
     <result column="name" property="name" jdbcType="VARCHAR" />
     <result column="content" property="content" jdbcType="VARCHAR" />
+    <collection property="commentList" ofType="com.example.domain.Comment" >
+    	<result column="comment_id"  property="id" jdbcType="INTEGER" />
+    	<result column="comment_name"  property="name" jdbcType="VARCHAR" />
+    	<result column="comment_content"  property="content" jdbcType="VARCHAR" />
+    	<result column="comment_article_id"  property="articleId" jdbcType="INTEGER" />
+    </collection>
   </resultMap>
   <sql id="Example_Where_Clause" >
     <!--
@@ -116,6 +122,9 @@
     <include refid="Base_Column_List" />
     from articles
     where id = #{id,jdbcType=INTEGER}
+  </select>
+  <select id="selectArticle" resultMap="BaseResultMap">
+  	select a.id, a.name, a.content, c.id as comment_id , c.name as comment_name, c.content as comment_content, c.article_id as comment_article_id from articles a left outer join comments c on a.id = c.article_id order by a.id desc, c.id desc
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
     <!--

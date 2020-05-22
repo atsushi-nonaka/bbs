@@ -138,6 +138,9 @@
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
+  <delete id="deleteByArticleId" parameterType="java.lang.Integer">
+  	delete from comments where article_id = #{articleId,jdbcType=INTEGER}
+  </delete>
   <insert id="insert" parameterType="com.example.domain.Comment" >
     <!--
       WARNING - @mbggenerated

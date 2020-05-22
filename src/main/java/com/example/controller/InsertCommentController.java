@@ -7,21 +7,21 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.example.domain.Comment;
 import com.example.form.CommentForm;
-import com.example.repository.CommentRepository;
+import com.example.mapper.CommentMapper;
 
 @Controller
 @RequestMapping("/comment")
 public class InsertCommentController {
 
 	@Autowired
-	private CommentRepository repository;
+	private CommentMapper mapper;
 	
 	@RequestMapping("/insert")
 	public String insert(CommentForm form) {
 		Comment comment = new Comment();
 		BeanUtils.copyProperties(form, comment);
 		comment.setArticleId(form.getIntArticleId());
-		repository.insert(comment);
+		mapper.insertSelective(comment);
 		return "redirect:/";
 	}
 }
